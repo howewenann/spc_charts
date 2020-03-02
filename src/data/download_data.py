@@ -1,13 +1,17 @@
 # import the requests library
 import requests
+import zipfile
+import os
 from pathlib import Path
 
-url = 'https://bioconnector.github.io/workshops/data/ilinet.csv'
-out = "data/raw/raw_data.csv"
+url1 = 'http://terra-ai.sg/datathon3-data.zip'
+out1 = "data/raw/dengue.zip"
 
-if __name__ == "__main__":
+url2 = 'https://archive.ics.uci.edu/ml/machine-learning-databases/diabetes/diabetes-data.tar.Z'
+out2 = "data/raw/diabetes.tar.Z"
 
-    project_dir = Path(__file__).resolve().parents[2]
+
+def download_data(url, out):
 
     # download the file contents in binary format
     r = requests.get(url)
@@ -16,5 +20,16 @@ if __name__ == "__main__":
     with open(project_dir / out, "wb") as code:
         code.write(r.content)
 
+    return None
 
+
+if __name__ == "__main__":
+
+    project_dir = Path(__file__).resolve().parents[2]
+
+    # download dengue data and unzip
+    download_data(url1, out1)
+
+    # download diabetes data and unzip
+    download_data(url2, out2)
  
