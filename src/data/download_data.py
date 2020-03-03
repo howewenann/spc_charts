@@ -1,6 +1,5 @@
 # import the requests library
 import requests
-import zipfile
 import os
 from pathlib import Path
 
