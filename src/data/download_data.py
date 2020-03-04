@@ -1,7 +1,8 @@
 # import the requests library
 import requests
-import zipfile
 import os
+import zipfile
+import tarfile
 from pathlib import Path
 
 url1 = 'http://terra-ai.sg/datathon3-data.zip'
@@ -9,6 +10,19 @@ out1 = "data/raw/dengue.zip"
 
 url2 = 'https://archive.ics.uci.edu/ml/machine-learning-databases/diabetes/diabetes-data.tar.Z'
 out2 = "data/raw/diabetes.tar.Z"
+
+
+def unzip_tar(path):
+    outpath = os.path.splitext(path)[0]
+    with tarfile.open(path) as tar:
+        tar.extractall(outpath)
+    return None
+
+def unzip_zip(path):
+    outpath = os.path.splitext(path)[0]
+    with zipfile.ZipFile(path, 'r') as zipObj:
+        zipObj.extractall(outpath)
+    return None
 
 
 def download_data(url, out):
@@ -29,7 +43,9 @@ if __name__ == "__main__":
 
     # download dengue data and unzip
     download_data(url1, out1)
+    # unzip_zip(out1)
 
     # download diabetes data and unzip
     download_data(url2, out2)
+    # unzip_tar(out2)
  
