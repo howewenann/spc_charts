@@ -11,6 +11,12 @@ out1 = "data/raw/dengue.zip"
 url2 = 'https://archive.ics.uci.edu/ml/machine-learning-databases/diabetes/diabetes-data.tar.Z'
 out2 = "data/raw/diabetes.tar.Z"
 
+# Google drive format
+# https://docs.google.com/spreadsheets/d/KEY/export?format=csv&gid=SHEET_ID
+
+url3 = 'https://docs.google.com/spreadsheets/d/1gFTNs_GtnTIyyVWXmsQxwdZpGbyicZM2HJcXvCf4b3k/export?format=csv&gid=0'
+out3 = "data/raw/covid19.csv"
+
 
 def unzip_tar(path):
     outpath = os.path.splitext(path)[0]
@@ -48,4 +54,8 @@ if __name__ == "__main__":
     # download diabetes data and unzip
     download_data(url2, out2)
     # unzip_tar(out2)
+
+    # download covid19
+    download_data(url3, out3)
+
  
