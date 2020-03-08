@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-
+# Helper functions
 def calculate_MR(x):
     MR = x.rolling(window=2).apply(lambda x: x.max() - x.min(), raw=True)
     return MR
@@ -12,6 +12,29 @@ def estimate_sigma_from_MR(MR):
     return sigma
 
 
+def calculate_ewma(x, alpha=0.1, center=None):
+
+    x_bar = x.mean()
+
+    if center is None:
+        center = x_bar
+
+    x_temp = x.copy().tolist()
+    x_temp.insert(0, center)
+
+    # Convert list to series
+    x_series = pd.Series(x_temp)
+
+    # calculate offset to omit first observation (center)
+    offset = len(x_series) - len(x)
+
+    # Return ewma
+    ret = x_series.ewm(alpha=alpha, adjust=False).mean()[offset:]
+
+    return ret
+
+
+# Parameter calculations
 def MR_params(MR, center=None):
 
     MR_bar = MR.mean()
@@ -66,28 +89,6 @@ def c_chart_params(x, center=None, L=3):
     return ret_df
 
 
-def calculate_ewma(x, alpha=0.1, center=None):
-
-    x_bar = x.mean()
-
-    if center is None:
-        center = x_bar
-
-    x_temp = x.copy().tolist()
-    x_temp.insert(0, center)
-
-    # Convert list to series
-    x_series = pd.Series(x_temp)
-
-    # calculate offset to omit first observation (center)
-    offset = len(x_series) - len(x)
-
-    # Return ewma
-    ret = x_series.ewm(alpha=alpha, adjust=False).mean()[offset:]
-
-    return ret
-
-
 def ewma_params(x, sigma, alpha=0.1, center=None, L=3):
 
     x_bar = x.mean()
@@ -116,12 +117,6 @@ def ewma_params(x, sigma, alpha=0.1, center=None, L=3):
     ret = pd.DataFrame({"obs": ewma.tolist(), "UCL": UCL, "Center": center, "LCL": LCL})
 
     return ret
-
-
-def convert_residuals_to_original(chart_df, predictions, features=["obs", "UCL", "Center", "LCL"]):
-    chart_df = chart_df.copy()
-    chart_df.loc[:, features] = chart_df.loc[:, features].values + predictions[:, None]
-    return chart_df
 
 
 if __name__ == "__main__":
