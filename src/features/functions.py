@@ -24,6 +24,8 @@ def gen_rv_seq(dist, args_list, size_list, random_state=123):
         rv_temp = gen_rv(dist, args=args_list[i], size=size_list[i], random_state=random_state).tolist()
         rv_df = pd.DataFrame({'seq':i, 'rv':rv_temp})
         ret = ret.append(rv_df)
+
+    ret = ret.reset_index(drop=True)
     
     return ret
 
