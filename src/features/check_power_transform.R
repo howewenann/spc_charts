@@ -32,9 +32,9 @@ g11 <- function(x, lambda){
 
 
 E_BC = f(mu, lambda) + f11(mu, lambda)/2 * s2
-S_CB = sqrt((f1(mu, lambda))^2 * s2)
+S_BC = sqrt((f1(mu, lambda))^2 * s2)
 
-CI_BC = c(E_BC - 3*S_CB, E_BC + 3*S_CB)
+CI_BC = c(E_BC - 3*S_BC, E_BC + 3*S_BC)
 CI_BC
 
 E_YJ = g(mu, lambda) + g11(mu, lambda)/2 * s2
