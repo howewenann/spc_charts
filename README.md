@@ -1,7 +1,7 @@
-FluForecast
+SPC Charts
 ==============================
 
-control charts for seasonal disease
+control charts for monitoring time series data
 
 Project Organization
 ------------
